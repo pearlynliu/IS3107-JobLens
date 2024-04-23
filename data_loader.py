@@ -6,7 +6,7 @@ import pandas_gbq
 # Setup credentials
 def get_credentials():
     parent_wd = os.path.dirname(os.getcwd())
-    cred_path = os.path.join(parent_wd, "project",  "auth", "is3107-416813-f8b1bf76ef57.json")
+    cred_path = os.path.join(parent_wd,  "auth", "is3107-416813-f8b1bf76ef57.json")
     return service_account.Credentials.from_service_account_file(cred_path)
 
 credentials = get_credentials()
