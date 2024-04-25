@@ -21,8 +21,8 @@ def load_data():
     """Load data from BigQuery, drop duplicates, and cache it for future use across scripts."""
     df = pandas_gbq.read_gbq(sql, project_id=project_id, credentials=credentials)
     
-    # Drop duplicates based on 'Title', 'Company', and 'Type'
-    df_unique = df.drop_duplicates(subset=['Title', 'Company', 'Type'])
+    # Drop duplicates based on 'Title', 'Company'
+    df_unique = df.drop_duplicates(subset=['Title', 'Company'])
 
     # Filter out rows where 'Company' is a string 'null'
     df_clean = df_unique[df_unique['Company'].str.lower() != 'null']

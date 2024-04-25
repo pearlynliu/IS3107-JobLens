@@ -58,7 +58,6 @@ if st.button('Predict Salary'):
     # Predict salary
     predicted_salary_scaled = model.predict([features])[0]  # Predict method expects an array of samples
     predicted_salary = scaler.inverse_transform([[predicted_salary_scaled]])
-    # print(f'Predicted salary: {predicted_salary}')
     
     # Display the predicted salary
     st.write(f'The predicted salary is: ${predicted_salary[0][0]:.2f}')
