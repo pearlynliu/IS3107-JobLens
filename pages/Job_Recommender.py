@@ -17,7 +17,18 @@ st.set_page_config(page_title='JobLens', page_icon='🤖')
 st.title('💼 Job Recommender')
 
 # Set the NLTK data path to use local resources
-nltk.data.path.append(os.path.join(os.path.dirname(__file__), 'nltk'))
+nltk.data.path.append(os.path.join(os.path.dirname(__file__), 'nltk_data'))
+
+# Debug: Outputting the NLTK path to check if it's correctly set
+st.write("NLTK paths:", nltk.data.path)
+
+# Try to load stopwords to test if the path is correct
+try:
+    st.write("Stopwords loaded:", stopwords.words('english')[0:10])  # Displaying first 10 stopwords
+except LookupError as e:
+    st.error("Failed to load stopwords: {}".format(e))
+
+
 
 ########## HELPER FUNCTIONS ##########
 def extract_text_from_pdf(uploaded_file):
