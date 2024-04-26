@@ -14,7 +14,7 @@ model, label_encoder, vectorizer, lda, scaler = load_model()
 
 # Create input fields
 job_type = st.selectbox('Job Type', ['Full time', 'Contract', 'Unknown'])  # Add actual job types used in training
-job_field = st.selectbox('Job Field', ['Data Analyst', 'Data Scientist', 'Data Engineer', 'Data Architect', 'Database Administrator', 'Software Engineer', 'Others'])  # Add actual job fields used in training
+job_field = st.selectbox('Job Field', ['Data Analyst', 'Data Scientist', 'Data Engineer', 'Data Architect', 'Database Administrator', 'Software Engineer'])  # Add actual job fields used in training
 job_description = st.text_area('Job Description')
 
 # Dummy function to mimic the original preprocessing, adjust as needed
