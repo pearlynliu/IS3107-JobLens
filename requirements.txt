@@ -6,3 +6,4 @@ pdfplumber
 joblib
 nltk
 more-itertools
+scikit-learn
