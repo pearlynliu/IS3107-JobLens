@@ -1,4 +1,6 @@
 # IS3107-JobLens
+View deployed app [here](https://joblens.streamlit.app/)! 🎈
+
 ## Setup Instructions
 1. Clone the Repository: Start by cloning the repository to your local machine.
 ```
@@ -13,3 +15,4 @@
 ```
   streamlit run 🤖_JobLens.py
 ```
+
