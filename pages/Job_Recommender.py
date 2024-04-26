@@ -1,13 +1,10 @@
 import streamlit as st
 import pdfplumber
-import io
+import os
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem import WordNetLemmatizer
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
 from itertools import chain
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
@@ -18,6 +15,9 @@ from data_loader import load_data
 # Page title
 st.set_page_config(page_title='JobLens', page_icon='🤖')
 st.title('💼 Job Recommender')
+
+# Set the NLTK data path to use local resources
+nltk.data.path.append(os.path.join(os.path.dirname(__file__), 'nltk'))
 
 ########## HELPER FUNCTIONS ##########
 def extract_text_from_pdf(uploaded_file):
