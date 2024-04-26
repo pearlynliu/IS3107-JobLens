@@ -2,3 +2,7 @@ streamlit
 google-oauth2-tool
 pandas_gbq
 plotly
+pdfplumber
+joblib
+nltk
+itertools
