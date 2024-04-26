@@ -50,14 +50,14 @@ role_counts = filtered_data['Field'].value_counts()
 
 # Select top 10 most popular roles
 top_10_roles = role_counts.head(10).reset_index()
-top_10_roles.columns = ['role_description', 'count']
+top_10_roles.columns = ['role', 'count']
 
 # Calculate percentage for each role
 top_10_roles['percentage'] = (top_10_roles['count'] / top_10_roles['count'].sum()) * 100
 
 # Plot top 10 roles as a pie chart with percentages using Plotly
-fig = px.pie(top_10_roles, values='count', names='role_description', title='Top 10 Most Popular Roles for the Past 7 Days',
-             labels={'role_description':'Role Description', 'count':'Count'},
+fig = px.pie(top_10_roles, values='count', names='role', title='Proportion of Roles',
+             labels={'role':'Role', 'count':'Count'},
              hover_data=['percentage'], hole=0.3)
 
 # Display the pie chart
@@ -74,7 +74,7 @@ salary_comparison = drop_na_salary.groupby('Field').agg({'Salary_min_month': 'me
 # Plot salary comparison for top 10 roles using Plotly
 fig = px.bar(salary_comparison, x='Field', y=['Salary_min_month', 'Salary_max_month'], 
              barmode='group', 
-             labels={'Field': 'Role Description', 'value': 'Salary per month (SGD)', 'variable': 'Salary Type'},
+             labels={'Field': 'Role', 'value': 'Salary per month (SGD)', 'variable': 'Salary Type'},
              title='Comparison of Minimum and Maximum Salaries')
 
 # Change legend labels
