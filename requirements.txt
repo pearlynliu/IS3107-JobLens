@@ -5,4 +5,4 @@ plotly
 pdfplumber
 joblib
 nltk
-itertools
+more-itertools
