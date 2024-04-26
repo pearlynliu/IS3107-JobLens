@@ -53,7 +53,6 @@ def preprocess_inputs(job_type, job_field, job_description):
 if st.button('Predict Salary'):
     # Preprocess the inputs
     features = preprocess_inputs(job_type, job_field, job_description)
-    # st.write(features)
     
     # Predict salary
     predicted_salary_scaled = model.predict([features])[0]  # Predict method expects an array of samples

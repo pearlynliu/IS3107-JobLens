@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
 from datetime import datetime, timedelta
 from data_loader import load_data
@@ -28,8 +29,11 @@ df['Field'] = df['Field'].str.lower().str.strip("{''}").str.title()
 # Replace empty field with NaN
 df['Field'] = df['Field'].replace('', None)
 
-# Remove NaN values
-df.dropna(subset=['Field'], inplace=True)
+# handling 'Field' -- since it only has 21 nans, we will impute with the most common title, which is software engineer
+df['Field'] = df['Field'].fillna('Software Engineer')
+
+df['Field'] = df['Field'].replace('Data', 'Data Analyst')
+
 
 # Filter data for the past 7 days
 end_date = datetime.today()
@@ -100,18 +104,28 @@ fig = px.line(time_series_data, x='Date', y='Number of Job Postings',
 st.plotly_chart(fig)
 
 
-##### Distribution of Job Postings by Industry #####
-# Remove rows where Industry is NaN
-industry_data = df.dropna(subset=['Industry'])
+##### Distribution of Job Postings by Company #####
+# Count occurrences of each company
+company_data = filtered_data.dropna(subset=['Company'])
+company_data['Company'] = company_data['Company'].replace('TIKTOK PTE. LTD.', 'TikTok')
+company_data['Company'] = company_data['Company'].replace('IMD Info-communications Media Development Authority', 'IMDA')
+company_counts = company_data['Company'].value_counts()
 
-# Count occurrences of each industry
-industry_counts = industry_data['Industry'].value_counts().reset_index()
-industry_counts.columns = ['Industry', 'Number of Postings']
+# Select top 10 companies
+top_10_companies = company_counts.head(10).reset_index()
+top_10_companies.columns = ['Company', 'Count']
 
-# Plot as a horizontal bar chart
-fig = px.bar(industry_counts.head(20), x='Number of Postings', y='Industry', orientation='h',
-             title='Top Industries Based on Number of Job Postings',
-             labels={'Industry': 'Industry', 'Number of Postings': 'Number of Postings'})
-fig.update_layout(yaxis={'categoryorder': 'total ascending'})  # Sort y-axis categories by total postings
+# Plot top 10 companies as a bar chart using Plotly
+fig = px.bar(top_10_companies, x='Company', y='Count',
+             title='Top 10 Companies Posting the Most in the Past 7 Days',
+             labels={'Count': 'Number of Posts', 'Company': 'Company Name'},
+             color='Company',  # This will color each bar differently
+             template='plotly_white')
+
+# Adjust layout
+fig.update_layout(xaxis_title="Company Name",
+                  yaxis_title="Number of Posts",
+                  xaxis_tickangle=-45)
+
+# Display the chart in Streamlit
 st.plotly_chart(fig)
-

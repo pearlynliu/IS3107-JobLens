@@ -2,6 +2,7 @@ import streamlit as st
 import os
 from google.oauth2 import service_account
 import pandas_gbq
+import numpy as np
 
 # Setup credentials
 def get_credentials():
@@ -26,6 +27,7 @@ def load_data():
 
     # Filter out rows where 'Company' is a string 'null'
     df_clean = df_unique[df_unique['Company'].str.lower() != 'null']
+    
     
     return df_clean
 
