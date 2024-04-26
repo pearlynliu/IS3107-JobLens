@@ -1,2 +1,3 @@
 streamlit
 google-oauth2-tool
+pandas_gbq
