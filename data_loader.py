@@ -6,9 +6,8 @@ import numpy as np
 
 # Setup credentials
 def get_credentials():
-    parent_wd = os.path.dirname(os.getcwd())
-    cred_path = os.path.join(parent_wd,  "auth", "is3107-416813-f8b1bf76ef57.json")
-    return service_account.Credentials.from_service_account_file(cred_path)
+    creds = st.secrets["gcp_service_account"]
+    return service_account.Credentials.from_service_account_info(creds)
 
 credentials = get_credentials()
 project_id = "is3107-416813"
@@ -27,7 +26,17 @@ def load_data():
 
     # Filter out rows where 'Company' is a string 'null'
     df_clean = df_unique[df_unique['Company'].str.lower() != 'null']
-    
+
+    # re-binning for 'Field'
+    df_clean['Field'] = np.where(
+        df_clean['Field'].str.contains('analyst', case=False), 'data analyst',
+        np.where(df_clean['Field'].str.contains('scientist', case=False), 'data scientist',
+            np.where((df_clean['Field'].str.contains('data engineer', case=False)) | (df_clean['Field'].str.contains('machine learning engineer', case=False)), 'data engineer',
+            np.where(df_clean['Field'].str.contains('architect', case=False), 'data architect',
+                np.where(df_clean['Field'].str.contains('database', case=False), 'database administrator',
+                np.where((df_clean['Field'].str.contains('software engineer', case=False)) | (df_clean['Field'].str.contains('developer', case=False)), 'software engineer', 'Others')
+                    # while 'Others' may seem very vague, from our list of filtered keywords, we know that these are all still data-related jobs.
+    )))))
     
     return df_clean
 
